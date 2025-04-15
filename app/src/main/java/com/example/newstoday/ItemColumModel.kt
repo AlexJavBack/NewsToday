@@ -2,5 +2,6 @@ package com.example.newstoday
 
 data class ItemColumModel(
     val image : Int,
-    val description : String
+    var description : String,
+    var content: String
 )
