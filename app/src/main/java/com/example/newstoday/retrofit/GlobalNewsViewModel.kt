@@ -26,9 +26,9 @@ class GlobalNewsViewModel : ViewModel() {
                 val response = RetrofitInstance.api.getNews("","ru")
                 for(i in response.results) {
                     var s = 0
-                    arrayNews += ItemColumModel(2,i.link,i.title)
+                    arrayNews += ItemColumModel(i.image_url,i.title,i.description)
                     s++
-                    if (s > 2) {
+                    if (s < 2) {
                         break
                     }
                 }
