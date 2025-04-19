@@ -1,5 +1,7 @@
 package com.example.newstoday
 
+import android.content.Intent
+import android.net.Uri
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -20,17 +22,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import coil3.compose.AsyncImage
 import com.example.newstoday.retrofit.GlobalNewsViewModel
 
 @Composable
-fun Myitems(item: ItemColumModel) {
-    val viewModel: GlobalNewsViewModel = viewModel()
+fun CardNew(item: ItemColumModel, viewModel: GlobalNewsViewModel, index : Int) {
     val newsList = viewModel.arrayNews
-    val maxChar = 50
+    val ctx = LocalContext.current
     Card(modifier = Modifier
         .padding(1.dp)
         .fillMaxWidth()
@@ -39,14 +40,8 @@ fun Myitems(item: ItemColumModel) {
         Row(verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier.background(Color.White)
                 .padding(3.dp)) {
-//        Image(painter = painterResource(id = item.image), contentDescription = "i",
-//            contentScale = ContentScale.Crop,
-//            modifier = Modifier.padding(3.dp)
-//                .clip(CircleShape)
-//                .size(50.dp)
-//        )
             AsyncImage(
-                model = newsList.getOrNull(0)?.imageUrl ?: "",
+                model = newsList.getOrNull(index)?.imageUrl ?: "",
                 contentDescription = null,
                 contentScale = ContentScale.Crop,
                 modifier = Modifier.padding(5.dp)
@@ -60,18 +55,24 @@ fun Myitems(item: ItemColumModel) {
                 }
                 Row(horizontalArrangement = Arrangement.Start,
                     modifier = Modifier.fillMaxSize()) {
-                    Text(newsList.getOrNull(0)?.description ?: "",
+                    Text(newsList.getOrNull(index)?.description ?: "",
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis)
                 }
                 Row(horizontalArrangement = Arrangement.End,
                     modifier = Modifier.fillMaxSize()) {
-                    TextButton(onClick = { /* Do something! */ }) {
-                        Text("I'm a Text Button")
+                    TextButton(onClick = {
+                        val urlIntent = Intent(
+                            Intent.ACTION_VIEW,
+                            Uri.parse(newsList.getOrNull(index)?.link ?: "")
+                        )
+                        ctx.startActivity(urlIntent)
+                    }
+                    ) {
+                        Text("Show more")
                     }
                 }
             }
-            //Text(newsList.getOrNull(0)?.content ?: "")
         }
     }
 

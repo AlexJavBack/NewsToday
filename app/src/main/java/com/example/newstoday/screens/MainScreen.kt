@@ -18,9 +18,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.newstoday.retrofit.GlobalNewsViewModel
 
 @Composable
-fun ListItems(navController: NavController) {
+fun ListItems(navController: NavController, screenVM: GlobalNewsViewModel) {
     Column {
         val searchText = remember {
             mutableStateOf("")
@@ -35,7 +36,8 @@ fun ListItems(navController: NavController) {
                 searchText.value = text
             },
             onSearch = {text ->
-                isActive.value = false
+                screenVM.qu.value = text
+                navController.navigate(Routes.GlobalNewsScreen.route)
             },
             placeholder = {
                 Text(text = "Search")
