@@ -1,5 +1,6 @@
 package com.example.newstoday
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
 import androidx.compose.foundation.background
@@ -28,14 +29,14 @@ import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import com.example.newstoday.retrofit.GlobalNewsViewModel
 
+@SuppressLint("ResourceAsColor")
 @Composable
 fun CardNew(item: ItemColumModel, viewModel: GlobalNewsViewModel, index : Int) {
     val newsList = viewModel.arrayNews
     val ctx = LocalContext.current
     Card(modifier = Modifier
-        .padding(1.dp)
-        .fillMaxWidth()
-        .offset(1.dp),
+        .padding(5.dp)
+        .fillMaxWidth(),
         shape = RoundedCornerShape(15.dp)) {
         Row(verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier.background(Color.White)
@@ -51,7 +52,7 @@ fun CardNew(item: ItemColumModel, viewModel: GlobalNewsViewModel, index : Int) {
             Column(modifier = Modifier.padding(start = 16.dp)) {
                 Row(horizontalArrangement = Arrangement.Center,
                     modifier = Modifier.fillMaxSize()) {
-                    Text(newsList.getOrNull(0)?.title ?: "")
+                    Text(newsList.getOrNull(index)?.title ?: "")
                 }
                 Row(horizontalArrangement = Arrangement.Start,
                     modifier = Modifier.fillMaxSize()) {

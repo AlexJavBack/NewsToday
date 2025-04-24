@@ -16,10 +16,6 @@ fun NavigationGraph(navController: NavHostController) {
             ListItems(navController = navController, viewModel)
         }
         composable(
-            route = Routes.detailScreen.route) {
-            SelectCategoryNewsScreen(navController = navController)
-        }
-        composable(
             route = Routes.GlobalNewsScreen.route) {
             NewsScreen(navController = navController, viewModel)
         }
